@@ -4,3 +4,13 @@
 // styles are for the entire app and not just one component. Additionally, this 
 // file can hold Sass mixins, functions, and placeholder classes to be imported 
 // and used throughout the application.
+
+.active-item {
+    border-right: 8px solid var(--ion-color-medium);
+    border-right: 8px solid var(--ion-color-medium);
+    color: var(--ion-color-medium);
+    background-color: var(--ion-color-medium); 
+}
+.active-item-icon {
+    color: var(--ion-color-primary);
+}

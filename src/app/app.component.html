@@ -1,3 +1,26 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane>
+    <ion-menu>
+
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Books Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of pages">
+            <ion-item (click)="selectedPath = p.url" [routerLink]="p.url" routerDirection="root" [class.active-item]="selectedPath === p.url">
+              <ion-icon [class.active-item-icon]="selectedPath === p.url"
+                [color]="selectedPath === p.url? '' : 'medium'" [name]="p.icon" slot="start"></ion-icon>{{p.title}}
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>

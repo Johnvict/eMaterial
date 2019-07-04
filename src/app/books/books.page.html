@@ -1,0 +1,248 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Books</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+  <ion-content padding>
+      <ion-card class="welcome-card">
+        <ion-img src="/assets/shapes.svg"></ion-img>
+        <ion-card-header>
+          <ion-card-subtitle>Get Started</ion-card-subtitle>
+          <ion-card-title>Welcome to Ionic</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p>
+        </ion-card-content>
+      </ion-card>
+      <!-- <ion-list lines="none"> -->
+      <!-- <ion-list>
+        <ion-item [routerLink]="p.url" *ngFor="let p of pages">
+          <ion-icon slot="start" color="medium" [name]="p.icon"></ion-icon>
+          <ion-label>{{p.title}}</ion-label>
+        </ion-item>
+      </ion-list> -->
+
+      <ion-segment [(ngModel)]="selectedView" color="secondary">
+        <ion-segment-button value="StoredBooks">
+          <ion-label>Stored Books</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="AllBooks">
+          <ion-label>All Books</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <div [ngSwitch]="selectedView">
+        <div *ngSwitchCase="'StoredBooks'">
+     
+          <ion-item-group>
+            <ion-item-divider color="secondary">
+              <ion-label>
+                <h3>Department Courses</h3>
+              </ion-label>
+            </ion-item-divider>
+            <ion-list lines="none" *ngFor="let course of myBooks?.departmentCourses" padding>
+              <ion-item-divider lines="none">
+                <ion-icon slot="start" color="secondary" name="book"></ion-icon>
+                <ion-label>{{ course?.code }}</ion-label>
+              </ion-item-divider>
+          
+              <ion-item-sliding (swiperight)="openBook(book)" *ngFor="let book of course?.materials">
+                <ion-item-options side="start">
+                  <ion-item-option color="secondary" expandable>
+                    Open
+                  </ion-item-option>
+                </ion-item-options>
+          
+                <ion-item>
+                  <ion-label>{{book?.title}}</ion-label>
+                </ion-item>
+          
+                <ion-item-options side="end">
+                  <ion-item-option color="danger" expandable (click)="deleteBook(book,  course, 'departmentCourses')">
+                    Delete
+                  </ion-item-option>
+                  <ion-item-option color="secondary" expandable (click)="viewDetail(book,  course, 'departmentCourses')">
+                    Detail
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
+          </ion-item-group>
+
+          <ion-item-group>
+            <ion-item-divider color="primary">
+              <ion-label><h3>Faculty Courses</h3></ion-label>
+            </ion-item-divider>
+          <ion-list lines="none" *ngFor="let course of myBooks?.facultyCourses" padding>
+            <ion-item-divider lines="none">
+              <ion-icon slot="start" color="primary" name="book"></ion-icon>
+              <ion-label>{{ course?.code }}</ion-label>
+            </ion-item-divider>
+
+            <ion-item-sliding (swiperight)="openBook(book)" *ngFor="let book of course.materials">
+              <ion-item-options side="start">
+                  <ion-item-option color="primary" expandable>
+                    Open
+                  </ion-item-option>
+                </ion-item-options>
+            
+                <ion-item>
+                  <ion-label>{{book?.title}}</ion-label>
+                </ion-item>
+            
+                <ion-item-options side="end">
+                  <ion-item-option color="danger" expandable  (click)="deleteBook(book,  course, 'facultyCourses')">
+                    Delete
+                  </ion-item-option>
+                  <ion-item-option color="primary" expandable (click)="viewDetail(book,  course, 'departmentCourses')">
+                    Detail
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
+          </ion-item-group>
+          
+          <ion-item-group>
+            <ion-item-divider color="tertiary">
+              <ion-label><h3>General Courses</h3></ion-label>
+            </ion-item-divider>
+          <ion-list lines="none" *ngFor="let course of myBooks?.generalCourses" padding>
+            <ion-item-divider lines="none">
+              <ion-icon slot="start" color="tertiary" name="book"></ion-icon>
+              <ion-label>{{ course?.code }}</ion-label>
+            </ion-item-divider>
+
+            <ion-item-sliding (swiperight)="openBook(book)" *ngFor="let book of course.materials">
+              <ion-item-options side="start">
+                  <ion-item-option color="tertiary" expandable>
+                    Open
+                  </ion-item-option>
+                </ion-item-options>
+            
+                <ion-item>
+                  <ion-label>{{book?.title}}</ion-label>
+                </ion-item>
+            
+                <ion-item-options side="end">
+                  <ion-item-option color="danger" expandable (click)="deleteBook(book,  course, 'generalCourses')">
+                    Delete
+                  </ion-item-option>
+                  <ion-item-option color="tertiary" expandable (click)="viewDetail(book,  course, 'departmentCourses')">
+                    Detail
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
+          </ion-item-group>
+
+        </div>
+
+
+        <div *ngSwitchCase="'AllBooks'">
+          <ion-item-group>
+              <ion-item-divider color="secondary">
+                <ion-label>
+                  <h3>Department Courses</h3>
+                </ion-label>
+              </ion-item-divider>
+              <ion-list lines="none" *ngFor="let course of allBooks?.departmentCourses" padding>
+                <ion-item-divider lines="none">
+                  <ion-icon slot="start" color="secondary" name="book"></ion-icon>
+                  <ion-label>{{ course?.code }}</ion-label>
+                </ion-item-divider>
+            
+                <!-- <ion-item-sliding (swiperight)="openBook(book)" -->
+                <ion-item-sliding (swiperight)="downloadBook(book, course, 'departmentCourses')"
+                  *ngFor="let book of course?.materials">
+                  <ion-item-options side="start">
+                    <ion-item-option color="secondary" expandable>
+                      Download
+                    </ion-item-option>
+                  </ion-item-options>
+            
+                  <ion-item>
+                    <ion-label>{{book?.title}}</ion-label>
+                  </ion-item>
+            
+                  <ion-item-options side="end">
+                    <ion-item-option color="secondary" expandable (click)="viewDetail(book, course, 'departmentCourses', true)">
+                      Detail
+                    </ion-item-option>
+                  </ion-item-options>
+                </ion-item-sliding>
+              </ion-list>
+            </ion-item-group>
+            
+            <ion-item-group>
+              <ion-item-divider color="primary">
+                <ion-label>
+                  <h3>Faculty Courses</h3>
+                </ion-label>
+              </ion-item-divider>
+              <ion-list lines="none" *ngFor="let course of allBooks?.facultyCourses" padding>
+                <ion-item-divider lines="none">
+                  <ion-icon slot="start" color="primary" name="book"></ion-icon>
+                  <ion-label>{{ course?.code }}</ion-label>
+                </ion-item-divider>
+            
+                <ion-item-sliding (swiperight)="downloadBook(book, course, 'departmentCourses')"
+                  *ngFor="let book of course?.materials">
+                  <ion-item-options side="start">
+                    <ion-item-option color="primary" expandable>
+                      Download
+                    </ion-item-option>
+                  </ion-item-options>
+            
+                  <ion-item>
+                    <ion-label>{{book?.title}}</ion-label>
+                  </ion-item>
+            
+                  <ion-item-options side="end">
+                    <ion-item-option color="primary" expandable (click)="viewDetail(book, course, 'facultyCourses', true)">
+                      Detail
+                    </ion-item-option>
+                  </ion-item-options>
+                </ion-item-sliding>
+              </ion-list>
+            </ion-item-group>
+            
+            <ion-item-group>
+              <ion-item-divider color="tertiary">
+                <ion-label>
+                  <h3>General Courses</h3>
+                </ion-label>
+              </ion-item-divider>
+              <ion-list lines="none" *ngFor="let course of allBooks?.generalCourses" padding>
+                <ion-item-divider lines="none">
+                  <ion-icon slot="start" color="tertiary" name="book"></ion-icon>
+                  <ion-label>{{ course?.code }}</ion-label>
+                </ion-item-divider>
+            
+                <ion-item-sliding (swiperight)="downloadBook(book, course, 'departmentCourses')"
+                  *ngFor="let book of course?.materials">
+                  <ion-item-options side="start">
+                    <ion-item-option color="tertiary" expandable>
+                      Download
+                    </ion-item-option>
+                  </ion-item-options>
+            
+                  <ion-item>
+                    <ion-label>{{book?.title}}</ion-label>
+                  </ion-item>
+            
+                  <ion-item-options side="end">
+                    <ion-item-option color="primary" expandable (click)="viewDetail(book, course, 'generalCourses', true)">
+                      Detail
+                    </ion-item-option>
+                  </ion-item-options>
+                </ion-item-sliding>
+              </ion-list>
+            </ion-item-group>
+        </div>
+      </div>
+  </ion-content>
+  

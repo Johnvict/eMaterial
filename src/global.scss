@@ -9,3 +9,44 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+
+.alert {
+    animation: 2s alertAnim forwards;
+}
+@keyframes alertAnim {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes alertLeaveAnim {
+    from {
+        opacity: 1;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(0);
+    }
+}
+.ion-hide{
+    display:none !important;
+    animation: 2s alertLeaveAnim forwards;
+}
+
+.alert-danger {
+    background-color: rgba(255, 60, 0, 0.596);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 13px;
+    margin: 5px 20px 0 25px;
+    text-align: center;
+}
+

@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/market-tab"></ion-back-button>
+    </ion-buttons>
+    <ion-title>subscribe</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <form #LoginForm="ngForm">
+        <ion-list>
+          <ion-button size="medium" expand="block">
+              Wallet Balance: {{ walletBalance }}
+          </ion-button>
+
+          <ion-item>  
+            <ion-label>Academic Session</ion-label>
+            <ion-select [(ngModel)]="selectedSession" (ionChange)="sessionSelected()" placeholder="Select Session"  name="session" required>
+              <ion-select-option *ngFor="let session of sessions" [value]="session">{{ session.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          
+          <ion-item>
+              <ion-label>Subscription Type</ion-label>
+            <ion-select [(ngModel)]="newSubscription.type" placeholder="Subscription Type" name="type" required [disabled]="selectedSession.id == null">
+              <ion-select-option value="first">1st Semester: ₦{{ selectedSession?.halfPrice }}</ion-select-option>
+              <ion-select-option value="second">2nd Semester: ₦{{ selectedSession?.halfPrice }}</ion-select-option>
+              <ion-select-option value="full">Full Session: ₦{{ selectedSession?.fullPrice }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        
+          <ion-row style="margin-top:25px">
+          <ion-col width-50>
+          <ion-button [routerLink]="['/tabs/market-tab']" size="small" expand="block" color="primary" fill="outline">Cancel</ion-button>
+          </ion-col>
+          <ion-col width-50>
+            <ion-button size="small" expand="block" color="primary" (click)="saveSubscription()" [disabled]="!LoginForm.form.valid">Subscribe</ion-button>
+          </ion-col>
+        </ion-row>
+  
+      </ion-list>
+    </form>
+</ion-content>
